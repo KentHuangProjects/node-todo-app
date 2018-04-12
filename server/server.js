@@ -1,28 +1,25 @@
-var mongoose = require('mongoose');
+var { mongoose } = require('./db/mongoose')
 
-mongoose.Promise = global.Promise
+var { Todos } = require('./models/todo')
 
-mongoose.connect('mongodb://localhost:27017/TodoApp')
+var { User } = require('./models/user')
 
-var Todo = mongoose.model('Todo', {
-    text: {
-        type: String
-    },
-    completed: {
-        type:Boolean
-    },
-    completedAt: {
-        type: Number
-    }
-})
 
-var newTodo = new Todo({
-    text: "hello world"
-})
+// var newTodo = new Todo({
+//     text: "hello world"
+// })
 
-newTodo.save().then((doc)=> {
-    console.log('Save doc ', doc)
+// newTodo.save().then((doc)=> {
+//     console.log('Save doc ', doc)
 
-}, (e) => {
-    console.log('error ', e)
-})
+// }, (e) => {
+//     console.log('error ', e)
+// })
+
+
+
+// var newu = new User({email:"   kenttttt@a.a"} )
+
+// newu.save().then((doc) => {
+//     console.log(newu)
+// })
