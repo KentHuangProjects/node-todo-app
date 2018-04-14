@@ -11,7 +11,9 @@ var todosSample = [{
     text: "first todo"
 }, {
     _id: new ObjectID(),
-    text: "second todo"
+    text: "second todo",
+    completed: true,
+    completedAt: 123
 }]
 
 
@@ -126,7 +128,7 @@ describe('DELETE /todos/:id', () => {
             .end((err, res) => {
                 if(err) {
                     return done(err)
-                }
+                } 
                 Todo.findById(hexId).then((todo) => {
                     expect(todo).toNotExist()
                     done()
@@ -155,3 +157,44 @@ describe('DELETE /todos/:id', () => {
 })
 
 
+describe('PATCH /todos/:id', () => {
+
+    it('should update the todo', (done) => {
+        //grab id of the first item
+        var id = todosSample[0]._id
+        var newtext  = 'test1'
+        request(app).patch(`/todos/${id}`)
+            .send({text: newtext, completed: true})
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.completed).toBe(true)
+                expect(res.body.todo.text).toBe(newtext)
+                expect(res.body.todo.completedAt).toBeA('number')
+            })
+            .end(done)
+        //update text, set completed true 
+    
+        //200
+        //text is changed, completed is true, completed is a number. toBeA
+
+    })
+
+    it('should clear completedAt when the todo is not completed' , (done) => {
+        //grab id of the second item
+        var id = todosSample[1]._id
+        var newtext  = 'test2'
+        request(app).patch(`/todos/${id}`)
+            .send({text: newtext, completed: false})
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.completed).toBe(false)
+                expect(res.body.todo.text).toBe(newtext)
+                expect(res.body.todo.completedAt).toNotExist()
+            })
+            .end(done)
+        //update text, set completed false 
+        //200
+        //text is changed, completed is false, completed is null. toNotExist
+
+    })
+})
