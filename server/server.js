@@ -1,3 +1,5 @@
+require('./config/config')
+
 const _ = require('lodash')
 var express = require('express')
 var bodyParser = require('body-parser')
@@ -68,6 +70,7 @@ app.delete('/todos/:id', (req,res) => {
         res.status(400).send()
     })
 })
+
 
 app.patch('/todos/:id', (req,res) => {
     var id = req.params.id
