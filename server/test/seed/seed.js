@@ -6,32 +6,44 @@ const { User } = require('./../../models/user')
 
 
 
+
+
+const userOneId = new ObjectID()
+const userTwoId = new ObjectID()
+
 const todosSample = [{
     _id: new ObjectID(),
-    text: "first todo"
+    text: "first todo",
+    _creator: userOneId
 }, {
     _id: new ObjectID(),
     text: "second todo",
     completed: true,
-    completedAt: 123
+    completedAt: 123,
+    _creator: userTwoId
 }]
 
-const userOneId = new ObjectID()
-const userTwoId = new ObjectID()
+
 const usersSample = [{
     _id: userOneId,
     email: 'kent@example.com',
     password: 'userOnePass',
     tokens: [{
         access: 'auth',
-        token: jwt.sign({_id: userOneId.toHexString(),access: 'auth'}, 'abc123').toString()
+        token: jwt.sign({_id: userOneId, access: 'auth'}, 'abc123').toString()
     }]
 },{
     _id: userTwoId,
     email: 'jen@example.com',
-    password: 'userTwoPass'
+    password: 'userTwoPass',
+    tokens: [{
+        access: 'auth',
+        token: jwt.sign({_id: userTwoId, access: 'auth'}, 'abc123').toString()
+    }]
 
 }]
+
+
 
 const populateTodos = (done) => {
     Todo.remove({}).then(() => {
@@ -44,7 +56,7 @@ const populateUsers = (done) => {
         var user1 = new User(usersSample[0]).save();
         var user2 = new User(usersSample[1]).save();
         
-        return Promise.all(['user1', 'user2']);
+        return Promise.all([user1, user2]);
     }).then(() => done())
 
 }
