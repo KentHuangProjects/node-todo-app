@@ -22,7 +22,7 @@ const usersSample = [{
     _id: userOneId,
     email: 'kent@example.com',
     password: 'userOnePass',
-    token: [{
+    tokens: [{
         access: 'auth',
         token: jwt.sign({_id: userOneId.toHexString(),access: 'auth'}, 'abc123').toString()
     }]
