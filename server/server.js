@@ -11,12 +11,23 @@ var { Todo } = require('./models/todo')
 var { User } = require('./models/user')
 var  { authenticate } = require('./middleware/authenticate')
 
+
+//swagger docs
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+ 
+
+
 const port = process.env.PORT || 3000;
 
 
 var app = express()
 
 app.use(bodyParser.json())
+
+//swagger docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.post('/todos' , authenticate, (req,res) => {
     var onetodo = new Todo({
