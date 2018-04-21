@@ -3,6 +3,9 @@ info:
   description: "Todo Api(包含JWT Token用户验证), 用户可以注册，登录，Todo的CRUD需要注册用户的认证凭证（token）进行交互。"
   version: "1.0.0"
   title: "Todo"
+  contact:
+    name: "github-repo"
+    url: "https://github.com/kent426/node-todo-app"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
